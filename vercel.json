@@ -1,0 +1,11 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/((?!assets/|favicon.svg|pwa-icon.svg|apple-touch-icon.svg|logo.svg|manifest.json|manifest.webmanifest|sw.js).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
