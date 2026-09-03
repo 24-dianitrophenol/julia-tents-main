@@ -44,7 +44,7 @@ export default function Products() {
         label="Catalog & rental inventory"
         title="Explore our tent collection"
         subtitle="Genuine tents for camping, weddings, VIP pagodas, and corporate events across Uganda. Direct factory pricing in Ugandan Shillings."
-        image="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1920&q=80"
+        image="/images/tents/arc_tent_20x10.jpg"
       />
 
       <section className="py-8 bg-stone-50 sticky top-20 z-30 border-b border-stone-200 shadow-sm backdrop-blur-md bg-stone-50/95">

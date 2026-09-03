@@ -39,7 +39,7 @@ export default function Contact() {
         label="Customer support & consultations"
         title="Get in touch with our tent team"
         subtitle="Inquire about pricing, custom manufacturing, wedding bookings, and instant availability across Uganda."
-        image="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80"
+        image="/images/tents/function_pic_1.jpg"
       />
 
       <section className="py-20 bg-stone-50">

@@ -21,7 +21,7 @@ export default function About() {
         title="Quality tents engineered for Uganda"
         subtitle="Julia Tents is a Kampala-based tent manufacturer and event shelter rental company, serving weddings, corporate events, church functions, and outdoor adventures."
 
-        image="https://images.unsplash.com/photo-1496545672447-f699b503d270?auto=format&fit=crop&w=1920&q=80"
+        image="/images/tents/15ftx12ft_executive.jpg"
       />
 
       <section className="py-20 bg-stone-50">
@@ -34,7 +34,7 @@ export default function About() {
               className="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-lg bg-stone-200"
             >
               <img
-                src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
+                src="/images/tents/on_wooden_platform.jpg"
                 alt="Luxury glamping and outdoor tents"
                 className="w-full h-full object-cover"
               />

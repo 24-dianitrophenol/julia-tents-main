@@ -222,7 +222,7 @@ export default function Home() {
           className="absolute inset-0 z-0"
         >
           <img
-            src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=1920&q=80"
+            src="/images/tents/luxury_frame_tent.jpg"
             alt="Camping and outdoor adventure in Uganda"
             className="w-full h-full object-cover"
           />

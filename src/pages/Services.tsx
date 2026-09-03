@@ -36,7 +36,7 @@ export default function Services() {
         label="Services & manufacturing"
         title="Full-service tent manufacturing & event hire"
         subtitle="Beyond rentals — we manufacture, brand, customize, and pitch. A single trusted partner for all your shelter requirements in Uganda."
-        image="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80"
+        image="/images/tents/two_peaked.jpg"
       />
 
       {/* Services Grid */}
