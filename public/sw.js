@@ -1,5 +1,5 @@
 // Julia Tents Service Worker
-const CACHE_NAME = 'juliatents-v1.0.4';
+const CACHE_NAME = 'juliatents-v1.0.5';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -23,7 +23,6 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
-  // For SPA HTML navigations, provide cached fallback only if network completely fails
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => {
