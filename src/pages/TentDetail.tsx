@@ -294,7 +294,7 @@ export default function TentDetail() {
                     <motion.button
                       whileTap={{ scale: 0.98 }}
                       onClick={handleAddToCart}
-                      className="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-amber-600/20"
+                      className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-amber-600/20 text-sm md:text-base"
                     >
                       <AnimatePresence mode="wait">
                         {added ? (
@@ -305,7 +305,7 @@ export default function TentDetail() {
                             exit={{ opacity: 0, y: -10 }}
                             className="flex items-center gap-2"
                           >
-                            <FontAwesomeIcon icon={faCheck} /> Added to inquiry cart!
+                            <FontAwesomeIcon icon={faCheck} /> Order Added to Cart!
                           </motion.span>
                         ) : (
                           <motion.span
@@ -315,7 +315,7 @@ export default function TentDetail() {
                             exit={{ opacity: 0, y: -10 }}
                             className="flex items-center gap-2"
                           >
-                            <FontAwesomeIcon icon={faCartShopping} /> Add to inquiry cart
+                            <FontAwesomeIcon icon={faCartShopping} /> Order Now — Add to Cart
                           </motion.span>
                         )}
                       </AnimatePresence>
@@ -323,14 +323,14 @@ export default function TentDetail() {
 
                     <button
                       onClick={directWhatsAppInquiry}
-                      className="w-full bg-[#25D366] hover:bg-[#1da851] text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-green-600/20"
+                      className="w-full bg-[#25D366] hover:bg-[#1da851] text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-green-600/20 text-sm md:text-base"
                     >
-                      <FontAwesomeIcon icon={faWhatsapp} className="text-lg" /> Inquire directly on WhatsApp
+                      <FontAwesomeIcon icon={faWhatsapp} className="text-lg" /> Direct WhatsApp Order
                     </button>
 
                     <Link to="/checkout" className="block text-center pt-2">
                       <span className="text-amber-700 hover:text-amber-800 text-xs font-semibold hover:underline">
-                        Proceed to checkout cart &rarr;
+                        Complete Order & Checkout &rarr;
                       </span>
                     </Link>
                   </div>

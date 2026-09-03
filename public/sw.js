@@ -1,10 +1,12 @@
 // Julia Tents Service Worker
-const CACHE_NAME = 'juliatents-v1.0.0';
+const CACHE_NAME = 'juliatents-v1.0.1';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './favicon.png',
   './favicon.svg',
+  './logo.jpg',
   './logo.svg',
   './pwa-icon.svg'
 ];
@@ -33,11 +35,8 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-  
-  // Only handle GET requests
   if (request.method !== 'GET') return;
 
-  // For HTML navigations, use Network first with Cache fallback
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => {
@@ -47,11 +46,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For static assets, use Cache first with Network fallback
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Fetch in background to revalidate cache
         fetch(request).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));

@@ -34,18 +34,22 @@ export default function Navbar() {
 
   const quoteLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi JuliaTents! I would like to request a quote.')}`;
 
+  const isHome = location.pathname === '/';
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-stone-50/95 backdrop-blur-md shadow-[0_2px_24px_rgba(0,0,0,0.08)]' : 'bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled || !isHome
+          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-stone-200/80'
+          : 'bg-white/90 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border-b border-stone-200/60 sm:border-none'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 sm:h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center group">
-          <JuliaTentsLogo theme={scrolled ? 'light' : 'dark'} size="md" />
+          <JuliaTentsLogo theme={scrolled || !isHome ? 'light' : 'auto'} size="md" />
         </Link>
 
 
@@ -85,22 +89,24 @@ export default function Navbar() {
           })}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Link
             to="/checkout"
             aria-label="View cart"
-            className={`relative p-2.5 rounded-full flex items-center justify-center transition-all ${
-              scrolled ? 'text-stone-700 hover:text-amber-600 hover:bg-stone-100' : 'text-white hover:text-amber-300 hover:bg-white/10'
+            className={`relative p-2 sm:p-2.5 rounded-full flex items-center justify-center transition-all ${
+              scrolled || !isHome
+                ? 'text-stone-700 hover:text-amber-600 hover:bg-stone-100'
+                : 'text-stone-800 sm:text-white hover:text-amber-600 sm:hover:text-amber-300 hover:bg-stone-100 sm:hover:bg-white/10'
             }`}
           >
-            <FontAwesomeIcon icon={faCartShopping} className="text-lg" />
+            <FontAwesomeIcon icon={faCartShopping} className="text-base sm:text-lg" />
             <AnimatePresence>
               {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
-                  className="absolute -top-1 -right-1 bg-amber-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm"
+                  className="absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] sm:text-[11px] font-bold w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shadow-sm"
                 >
                   {totalItems}
                 </motion.span>
@@ -121,8 +127,10 @@ export default function Navbar() {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
-            className={`lg:hidden p-2.5 rounded-full flex items-center justify-center transition-colors ${
-              scrolled ? 'text-stone-700 hover:bg-stone-100' : 'text-white hover:bg-white/10'
+            className={`lg:hidden p-2 sm:p-2.5 rounded-full flex items-center justify-center transition-colors ${
+              scrolled || !isHome
+                ? 'text-stone-700 hover:bg-stone-100'
+                : 'text-stone-800 sm:text-white hover:bg-stone-100 sm:hover:bg-white/10'
             }`}
           >
             <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} className="text-lg" />

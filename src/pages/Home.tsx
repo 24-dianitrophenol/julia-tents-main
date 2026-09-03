@@ -103,7 +103,7 @@ export default function Home() {
             </Link>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 lg:gap-8">
             {featured.map((tent, i) => (
               <motion.div
                 key={tent.id}
@@ -111,8 +111,8 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-stone-200/80 transition-all flex flex-col"
+                whileHover={{ y: -4 }}
+                className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs hover:shadow-xl border border-stone-200/90 transition-all flex flex-col justify-between"
               >
                 <Link to={`/tent/${tent.id}`} className="relative block aspect-[4/3] overflow-hidden bg-stone-100 group">
                   <img
@@ -121,56 +121,58 @@ export default function Home() {
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/65 via-transparent to-transparent" />
                   {tent.badge && (
-                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-amber-500 text-white text-xs font-medium shadow-sm">
+                    <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-amber-500 text-white text-[10px] sm:text-xs font-bold shadow-xs">
                       {tent.badge}
                     </span>
                   )}
-                  <span className="absolute bottom-3 left-4 text-white text-xs font-medium bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-md">
-                    {categoryLabels[tent.category]}
+                  <span className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 text-white text-[10px] sm:text-xs font-medium bg-black/50 backdrop-blur-md px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md">
+                    {categoryLabels[tent.category].split(' ')[0]}
                   </span>
                 </Link>
 
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                <div className="p-3 sm:p-5 flex-1 flex flex-col justify-between">
                   <div>
                     <Link to={`/tent/${tent.id}`}>
-                      <h3 className="font-display text-xl font-bold text-stone-900 hover:text-amber-600 transition-colors leading-snug">
+                      <h3 className="font-display text-xs sm:text-base md:text-lg font-bold text-stone-900 hover:text-amber-600 transition-colors line-clamp-2 leading-snug">
                         {tent.name}
                       </h3>
                     </Link>
-                    <p className="text-stone-500 text-xs mt-1.5 line-clamp-2">{tent.tagline}</p>
+                    <p className="hidden sm:block text-stone-500 text-xs mt-1 line-clamp-2 leading-relaxed">{tent.tagline}</p>
 
-                    <div className="flex items-center gap-4 text-xs text-stone-600 mt-4 pt-3 border-t border-stone-100">
-                      <span className="flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faUsers} className="text-amber-500" /> {tent.capacity} people
+                    <div className="flex items-center justify-between text-[10px] sm:text-xs text-stone-600 mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-stone-100">
+                      <span className="flex items-center gap-1 font-medium">
+                        <FontAwesomeIcon icon={faUsers} className="text-amber-500 text-[10px]" /> {tent.capacity} ppl
                       </span>
-                      <span className="text-stone-300">&bull;</span>
-                      <span>{tent.size}</span>
+                      <span className="flex items-center gap-1 text-stone-500 text-[10px] sm:text-xs truncate max-w-[55%]">
+                        <FontAwesomeIcon icon={faRuler} className="text-amber-500 text-[10px]" /> {tent.size}
+                      </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between mt-5 pt-3 border-t border-stone-100">
-                    <div>
-                      <span className="text-xs text-stone-400 block">Hire rate</span>
-                      <span className="font-display text-lg font-bold text-stone-900">{formatUGX(tent.pricePerDay)}</span>
-                      <span className="text-stone-400 text-xs font-normal"> / day</span>
+                  <div className="flex items-center justify-between mt-3 pt-2.5 sm:pt-3 border-t border-stone-100 gap-1.5">
+                    <div className="flex flex-col">
+                      <span className="text-[9px] sm:text-[11px] text-stone-400 leading-none">Rate/day</span>
+                      <span className="font-display text-xs sm:text-base md:text-lg font-bold text-stone-900 leading-tight">
+                        {formatUGX(tent.pricePerDay)}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <a
                         href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi JuliaTents! I want to inquire about renting: ${tent.name} (${formatUGX(tent.pricePerDay)}/day)`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2.5 rounded-full text-[#25D366] hover:bg-green-50 transition-colors text-lg"
+                        className="hidden sm:inline-flex p-2 rounded-xl text-[#25D366] hover:bg-green-50 transition-colors text-base"
                         title="Inquire on WhatsApp"
                       >
                         <FontAwesomeIcon icon={faWhatsapp} />
                       </a>
                       <Link
                         to={`/tent/${tent.id}`}
-                        className="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors inline-flex items-center gap-1.5"
+                        className="bg-amber-600 hover:bg-amber-500 active:scale-95 text-white text-[11px] sm:text-xs font-bold px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl transition-all inline-flex items-center gap-1 shadow-sm"
                       >
-                        <FontAwesomeIcon icon={faBagShopping} /> View details
+                        <FontAwesomeIcon icon={faBagShopping} className="text-[10px]" /> Order
                       </Link>
                     </div>
                   </div>

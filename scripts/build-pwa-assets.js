@@ -10,8 +10,7 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-
-// 1. Transparent vector logo mark
+// 1. Transparent vector logo mark referencing the website branding
 const svgLogo = `<svg viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="amberGradient" x1="12" y1="12" x2="128" y2="82" gradientUnits="userSpaceOnUse">
@@ -24,30 +23,20 @@ const svgLogo = `<svg viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org
   <path d="M136 94 L158 94 C162 94, 165 98, 163 102 L160 108 C158 111, 154 113, 150 113 L134 113 C129 113, 126 108, 128 103 Z" fill="#F59E0B" />
 </svg>`;
 
-// 2. Full app icon with background (for home screen & standalone PWA)
-function getAppIconSvg(bgColor = '#FAFAF9', beamColor = '#1C1917') {
+// 2. Full app icon with white background and website logo
+function getAppIconSvg() {
   return `<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="amberGrad" x1="50" y1="50" x2="450" y2="450" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="100%" stop-color="#D97706" />
-    </linearGradient>
-  </defs>
-  ${bgColor ? `<rect width="512" height="512" rx="112" fill="${bgColor}" />` : ''}
-  <g transform="translate(60, 96) scale(2.45)">
-    <path d="M62 18 C58 12, 50 12, 46 18 L12 68 C8 74, 13 82, 21 82 L38 82 C42 82, 46 79, 49 75 L62 54 C66 48, 74 48, 78 54 L91 75 C94 79, 98 82, 102 82 L119 82 C127 82, 132 74, 128 68 Z" fill="url(#amberGrad)" />
-    <path d="M104 6 C100 1, 93 1, 89 6 L78 21 C75 25, 75 31, 79 35 L129 95 C132 99, 137 101, 142 101 L153 101 C159 101, 163 94, 159 88 Z" fill="${beamColor}" />
-    <path d="M136 94 L158 94 C162 94, 165 98, 163 102 L160 108 C158 111, 154 113, 150 113 L134 113 C129 113, 126 108, 128 103 Z" fill="#F59E0B" />
-  </g>
+  <rect width="512" height="512" rx="112" fill="#FFFFFF" />
+  <image href="/logo.jpg" x="32" y="32" width="448" height="448" preserveAspectRatio="xMidYMid meet" />
 </svg>`;
 }
 
 fs.writeFileSync(path.join(publicDir, 'logo.svg'), svgLogo.trim());
-fs.writeFileSync(path.join(publicDir, 'favicon.svg'), getAppIconSvg('#FAFAF9', '#1C1917').trim());
-fs.writeFileSync(path.join(publicDir, 'pwa-icon.svg'), getAppIconSvg('#FAFAF9', '#1C1917').trim());
-fs.writeFileSync(path.join(publicDir, 'apple-touch-icon.svg'), getAppIconSvg('#FAFAF9', '#1C1917').trim());
+fs.writeFileSync(path.join(publicDir, 'favicon.svg'), getAppIconSvg().trim());
+fs.writeFileSync(path.join(publicDir, 'pwa-icon.svg'), getAppIconSvg().trim());
+fs.writeFileSync(path.join(publicDir, 'apple-touch-icon.svg'), getAppIconSvg().trim());
 
-// 3. PWA Manifest (PWABuilder and W3C compliant)
+// 3. PWA Manifest (PWABuilder and W3C compliant) with white theme_color
 const manifest = {
   name: 'Julia Tents — Event & Camping Tents Uganda',
   short_name: 'Julia Tents',
@@ -57,8 +46,8 @@ const manifest = {
   id: './#/',
   display: 'standalone',
   display_override: ['window-controls-overlay', 'standalone', 'minimal-ui'],
-  background_color: '#FAFAF9',
-  theme_color: '#D97706',
+  background_color: '#FFFFFF',
+  theme_color: '#FFFFFF',
   orientation: 'any',
   lang: 'en',
   dir: 'ltr',
@@ -66,9 +55,9 @@ const manifest = {
   categories: ['shopping', 'business', 'lifestyle'],
   icons: [
     {
-      src: 'pwa-icon.svg',
+      src: 'logo.jpg',
       sizes: '192x192 512x512',
-      type: 'image/svg+xml',
+      type: 'image/jpeg',
       purpose: 'any'
     },
     {
@@ -76,6 +65,12 @@ const manifest = {
       sizes: '192x192 512x512',
       type: 'image/svg+xml',
       purpose: 'maskable'
+    },
+    {
+      src: 'favicon.png',
+      sizes: '64x64 32x32 24x24 16x16',
+      type: 'image/png',
+      purpose: 'any'
     },
     {
       src: 'favicon.svg',
@@ -113,12 +108,14 @@ fs.writeFileSync(path.join(publicDir, 'manifest.webmanifest'), JSON.stringify(ma
 
 // 4. Service Worker (Offline caching & PWA criteria)
 const swCode = `// Julia Tents Service Worker
-const CACHE_NAME = 'juliatents-v1.0.0';
+const CACHE_NAME = 'juliatents-v1.0.1';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './favicon.png',
   './favicon.svg',
+  './logo.jpg',
   './logo.svg',
   './pwa-icon.svg'
 ];
@@ -147,11 +144,8 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-  
-  // Only handle GET requests
   if (request.method !== 'GET') return;
 
-  // For HTML navigations, use Network first with Cache fallback
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request).catch(() => {
@@ -161,11 +155,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // For static assets, use Cache first with Network fallback
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Fetch in background to revalidate cache
         fetch(request).then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
