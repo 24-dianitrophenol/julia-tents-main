@@ -9,7 +9,7 @@ export default function AppBottomNav() {
 
   const tabs = [
     { label: 'Home', path: '/', icon: faHouse },
-    { label: 'Tents', path: '/products', icon: faCampground },
+    { label: 'Products', path: '/products', icon: faCampground },
     { label: 'Services', path: '/services', icon: faWrench },
     { label: 'Cart', path: '/checkout', icon: faBagShopping, badge: totalItems },
     { label: 'Contact', path: '/contact', icon: faHeadset },
