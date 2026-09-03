@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight, faStar, faUsers, faCalendarDays, faBolt,
-  faShieldHalved, faTruckFast, faBagShopping, faClock,
+  faShieldHalved, faTruckFast, faBagShopping, faClock, faRuler,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
