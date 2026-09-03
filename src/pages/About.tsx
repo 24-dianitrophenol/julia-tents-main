@@ -1,18 +1,17 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faLeaf, faUsers, faAward, faArrowRight, faTruckFast, faHandshakeAngle, faHammer } from '@fortawesome/free-solid-svg-icons';
+import { faAward, faArrowRight, faTruckFast, faHandshakeAngle, faHammer } from '@fortawesome/free-solid-svg-icons';
 import PageTransition from '@/components/PageTransition';
 import PageHeader from '@/components/PageHeader';
 import { getAssetUrl } from '@/lib/config';
 
-
 export default function About() {
-  const highlights = [
-    { icon: faAward, title: 'Commercial grade PVC', desc: 'Flame retardant, 100% waterproof blockout fabrics' },
-    { icon: faTruckFast, title: 'Kampala rapid delivery', desc: 'Prompt dispatch, setup, and teardown across Uganda' },
-    { icon: faHandshakeAngle, title: 'Dedicated crew', desc: 'Experienced installation team for safe structural anchoring' },
-    { icon: faHammer, title: 'Custom manufacturing', desc: 'Tailored dimensions, colors, and custom brand printing' },
+  const values = [
+    { icon: faAward, title: 'Commercial grade PVC', text: 'Flame retardant, 100% waterproof blockout fabrics built for heavy tropical rains and strong sun.' },
+    { icon: faTruckFast, title: 'Kampala rapid delivery', text: 'Prompt logistics, on-time venue dispatch, and clean takedown across Uganda.' },
+    { icon: faHandshakeAngle, title: 'Dedicated crew', text: 'Experienced rigging and installation team for safe structural anchoring.' },
+    { icon: faHammer, title: 'Custom manufacturing', text: 'Tailored dimensions, custom color combinations, and corporate logo printing.' },
   ];
 
   return (
@@ -102,4 +101,3 @@ export default function About() {
     </PageTransition>
   );
 }
-
