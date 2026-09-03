@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
+import ErrorBoundary from './components/ErrorBoundary.tsx';
 import './index.css';
 
 // Register PWA Service Worker safely
@@ -9,22 +10,19 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('./sw.js')
       .then((reg) => {
-        if (import.meta.env.DEV) {
-          console.log('Julia Tents service worker registered successfully:', reg.scope);
-        }
+        // Automatically check for updates
+        reg.update().catch(() => {});
       })
       .catch((err) => {
-        if (import.meta.env.DEV) {
-          console.warn('Service worker registration failed:', err);
-        }
+        console.warn('Service worker registration:', err);
       });
   });
 }
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   </StrictMode>
 );
-
