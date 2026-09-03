@@ -1,3 +1,4 @@
+import { getAssetUrl } from '@/lib/config';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -14,28 +15,28 @@ interface Slide {
 
 const slides: Slide[] = [
   {
-    image: '/images/tents/slide_one.jpg',
+    image: getAssetUrl('images/tents/slide_one.jpg'),
     title: 'Quality tents manufactured and rented in Uganda',
     subtitle: 'From quick pop-up camping tents to 100-seater event marquees — durable materials and factory-direct pricing.',
     link: '/products',
     linkLabel: 'Browse tent catalog',
   },
   {
-    image: '/images/tents/100_seater_20x30ft.jpg',
+    image: getAssetUrl('images/tents/100_seater_20x30ft.jpg'),
     title: 'Wedding & event marquee setups',
     subtitle: 'Make your special day unforgettable with commercial PVC tents, church windows, and full on-site setup.',
     link: '/products',
     linkLabel: 'Explore event tents',
   },
   {
-    image: '/images/tents/on_wooden_platform.jpg',
+    image: getAssetUrl('images/tents/on_wooden_platform.jpg'),
     title: 'Safari lodge & luxury glamping tents',
     subtitle: 'Heavy-duty 420g waterproof canvas lodge tents engineered for wilderness lodges, eco-resorts, and getaways.',
     link: '/products',
     linkLabel: 'View glamping tents',
   },
   {
-    image: '/images/tents/beige_canopy.jpg',
+    image: getAssetUrl('images/tents/beige_canopy.jpg'),
     title: 'Promotional gazebos & pagoda canopies',
     subtitle: 'Quick 60-second foldable gazebos and high-peak pagoda tents with custom logo printing available.',
     link: '/services',

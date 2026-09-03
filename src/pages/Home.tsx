@@ -11,7 +11,7 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import PageTransition from '@/components/PageTransition';
 import HomeSlider from '@/components/HomeSlider';
 import { tents, categoryLabels, formatUGX } from '@/data/tents';
-import { WHATSAPP_NUMBER } from '@/lib/config';
+import { WHATSAPP_NUMBER, getAssetUrl } from '@/lib/config';
 
 export default function Home() {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -224,7 +224,7 @@ export default function Home() {
           className="absolute inset-0 z-0"
         >
           <img
-            src="/images/tents/luxury_frame_tent.jpg"
+            src={getAssetUrl('images/tents/luxury_frame_tent.jpg')}
             alt="Camping and outdoor adventure in Uganda"
             className="w-full h-full object-cover"
           />

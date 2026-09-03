@@ -1,17 +1,18 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faLeaf, faUsers, faAward, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faLeaf, faUsers, faAward, faArrowRight, faTruckFast, faHandshakeAngle, faHammer } from '@fortawesome/free-solid-svg-icons';
 import PageTransition from '@/components/PageTransition';
 import PageHeader from '@/components/PageHeader';
+import { getAssetUrl } from '@/lib/config';
 
 
 export default function About() {
-  const values = [
-    { icon: faHeart, title: 'Dedicated craftsmanship', text: 'Every tent is manufactured with heavy-duty PVC or ripstop canvas, inspected before and after each rental.' },
-    { icon: faLeaf, title: 'Weatherproof & durable', text: 'Built to withstand Ugandan tropical conditions — heavy downpours, strong sunshine, and wind.' },
-    { icon: faUsers, title: 'Customer-first service', text: 'From initial quote to prompt takedown, we take care of all transport, assembly, and safety anchoring.' },
-    { icon: faAward, title: 'Factory-direct prices', text: 'Transparent Ugandan Shillings pricing without middleman markups for both rental and direct purchase.' },
+  const highlights = [
+    { icon: faAward, title: 'Commercial grade PVC', desc: 'Flame retardant, 100% waterproof blockout fabrics' },
+    { icon: faTruckFast, title: 'Kampala rapid delivery', desc: 'Prompt dispatch, setup, and teardown across Uganda' },
+    { icon: faHandshakeAngle, title: 'Dedicated crew', desc: 'Experienced installation team for safe structural anchoring' },
+    { icon: faHammer, title: 'Custom manufacturing', desc: 'Tailored dimensions, colors, and custom brand printing' },
   ];
 
   return (
@@ -20,8 +21,7 @@ export default function About() {
         label="Our story & mission"
         title="Quality tents engineered for Uganda"
         subtitle="Julia Tents is a Kampala-based tent manufacturer and event shelter rental company, serving weddings, corporate events, church functions, and outdoor adventures."
-
-        image="/images/tents/15ftx12ft_executive.jpg"
+        image={getAssetUrl('images/tents/15ftx12ft_executive.jpg')}
       />
 
       <section className="py-20 bg-stone-50">
@@ -34,7 +34,7 @@ export default function About() {
               className="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-lg bg-stone-200"
             >
               <img
-                src="/images/tents/on_wooden_platform.jpg"
+                src={getAssetUrl('images/tents/on_wooden_platform.jpg')}
                 alt="Luxury glamping and outdoor tents"
                 className="w-full h-full object-cover"
               />

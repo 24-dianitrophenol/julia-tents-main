@@ -10,7 +10,7 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import PageTransition from '@/components/PageTransition';
 import PageHeader from '@/components/PageHeader';
 import { tents, categoryLabels, formatUGX, type TentCategory } from '@/data/tents';
-import { WHATSAPP_NUMBER } from '@/lib/config';
+import { WHATSAPP_NUMBER, getAssetUrl } from '@/lib/config';
 
 const categories: (TentCategory | 'all')[] = ['all', 'camping', 'event', 'safari', 'dome', 'canopy'];
 
@@ -65,7 +65,7 @@ export default function Products() {
         label="Catalog & rental inventory"
         title="Explore our tent collection"
         subtitle="Genuine tents for camping, weddings, VIP pagodas, and corporate events across Uganda. Direct factory pricing in Ugandan Shillings."
-        image="/images/tents/arc_tent_20x10.jpg"
+        image={getAssetUrl('images/tents/arc_tent_20x10.jpg')}
       />
 
       {/* Desktop Filter Bar & Sticky Mobile Action Bar */}

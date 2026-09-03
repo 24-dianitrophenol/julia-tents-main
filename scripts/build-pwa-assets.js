@@ -10,7 +10,7 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-// 1. Transparent vector logo mark referencing the website branding
+// 1. Transparent vector logo mark
 const svgLogo = `<svg viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="amberGradient" x1="12" y1="12" x2="128" y2="82" gradientUnits="userSpaceOnUse">
@@ -27,7 +27,7 @@ const svgLogo = `<svg viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org
 function getAppIconSvg() {
   return `<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <rect width="512" height="512" rx="112" fill="#FFFFFF" />
-  <image href="/logo.jpg" x="32" y="32" width="448" height="448" preserveAspectRatio="xMidYMid meet" />
+  <image href="logo.jpg" x="32" y="32" width="448" height="448" preserveAspectRatio="xMidYMid meet" />
 </svg>`;
 }
 
@@ -61,22 +61,16 @@ const manifest = {
       purpose: 'any'
     },
     {
-      src: 'pwa-icon.svg',
-      sizes: '192x192 512x512',
-      type: 'image/svg+xml',
-      purpose: 'maskable'
-    },
-    {
       src: 'favicon.png',
       sizes: '64x64 32x32 24x24 16x16',
       type: 'image/png',
       purpose: 'any'
     },
     {
-      src: 'favicon.svg',
-      sizes: '64x64 32x32 24x24 16x16',
+      src: 'pwa-icon.svg',
+      sizes: '192x192 512x512',
       type: 'image/svg+xml',
-      purpose: 'any'
+      purpose: 'maskable'
     }
   ],
   shortcuts: [
@@ -106,26 +100,12 @@ const manifest = {
 fs.writeFileSync(path.join(publicDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
 fs.writeFileSync(path.join(publicDir, 'manifest.webmanifest'), JSON.stringify(manifest, null, 2));
 
-// 4. Service Worker (Offline caching & PWA criteria)
+// 4. Service Worker (Network-First strategy to ensure latest content always renders)
 const swCode = `// Julia Tents Service Worker
-const CACHE_NAME = 'juliatents-v1.0.1';
-const STATIC_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './favicon.png',
-  './favicon.svg',
-  './logo.jpg',
-  './logo.svg',
-  './pwa-icon.svg'
-];
+const CACHE_NAME = 'juliatents-v1.0.2';
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
-    }).then(() => self.skipWaiting())
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -146,33 +126,25 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
 
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request).catch(() => {
-        return caches.match('./index.html') || caches.match('./');
-      })
-    );
-    return;
-  }
-
+  // Network First for everything
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) {
-        fetch(request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
-          }
-        }).catch(() => {});
-        return cachedResponse;
-      }
-      return fetch(request).then((networkResponse) => {
+    fetch(request)
+      .then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200 && request.url.startsWith(self.location.origin)) {
           const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
         }
         return networkResponse;
-      });
-    })
+      })
+      .catch(() => {
+        return caches.match(request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
+          if (request.mode === 'navigate') {
+            return caches.match('./index.html') || caches.match('./');
+          }
+          return new Response('Offline', { status: 503, statusText: 'Offline' });
+        });
+      })
   );
 });
 `;

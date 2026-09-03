@@ -6,7 +6,7 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { useState } from 'react';
 import PageTransition from '@/components/PageTransition';
 import PageHeader from '@/components/PageHeader';
-import { WHATSAPP_NUMBER, DISPLAY_PHONE, BUSINESS_EMAIL, BUSINESS_LOCATION, BUSINESS_HOURS } from '@/lib/config';
+import { WHATSAPP_NUMBER, DISPLAY_PHONE, BUSINESS_EMAIL, BUSINESS_LOCATION, BUSINESS_HOURS, getAssetUrl } from '@/lib/config';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -39,7 +39,7 @@ export default function Contact() {
         label="Customer support & consultations"
         title="Get in touch with our tent team"
         subtitle="Inquire about pricing, custom manufacturing, wedding bookings, and instant availability across Uganda."
-        image="/images/tents/function_pic_1.jpg"
+        image={getAssetUrl('images/tents/function_pic_1.jpg')}
       />
 
       <section className="py-20 bg-stone-50">

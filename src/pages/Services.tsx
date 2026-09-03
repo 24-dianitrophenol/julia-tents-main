@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTruck, faScrewdriverWrench, faShieldHalved, faCakeCandles,
-  faCamera, faUsers, faCircleCheck,
+  faCamera, faUsers, faCircleCheck, faPhone, faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
-
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import PageTransition from '@/components/PageTransition';
 import PageHeader from '@/components/PageHeader';
-import { WHATSAPP_NUMBER } from '@/lib/config';
+import { WHATSAPP_NUMBER, getAssetUrl } from '@/lib/config';
 
 export default function Services() {
   const services = [
@@ -22,10 +21,10 @@ export default function Services() {
   ];
 
   const process = [
-    { step: '01', title: 'Choose your tent model', text: 'Select your preferred tent from our catalog or message our team on WhatsApp with your guest count.' },
-    { step: '02', title: 'Instant WhatsApp quotation', text: 'We prepare an itemized quote with dates, delivery location, and setup timing for your review.' },
-    { step: '03', title: 'Delivery & expert setup', text: 'Our trained crew arrives on schedule, builds the frame, tensions the canvas, and anchors all guy ropes.' },
-    { step: '04', title: 'Event celebration & takedown', text: 'Enjoy your occasion. Once concluded, our team dismantles and retrieves all equipment smoothly.' },
+    { step: '01', title: 'Consultation & quote', desc: 'Tell us your event date, estimated guests, and location. We suggest suitable sizes and provide a competitive quote.' },
+    { step: '02', title: 'Dispatch & transport', desc: 'Our logistics team transports clean, inspected tents and heavy-duty frame components to your venue on schedule.' },
+    { step: '03', title: 'Assembly & anchoring', desc: 'Our trained rigging crew pitches the shelter, secures all guy ropes and footplates, and verifies waterproof sealing.' },
+    { step: '04', title: 'Prompt takedown', desc: 'After your event concludes, our crew dismantles everything cleanly without disturbing your venue grounds.' },
   ];
 
   const quoteLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi JuliaTents! I would like to request a quote for your tent services.')}`;
@@ -36,7 +35,7 @@ export default function Services() {
         label="Services & manufacturing"
         title="Full-service tent manufacturing & event hire"
         subtitle="Beyond rentals — we manufacture, brand, customize, and pitch. A single trusted partner for all your shelter requirements in Uganda."
-        image="/images/tents/two_peaked.jpg"
+        image={getAssetUrl('images/tents/two_peaked.jpg')}
       />
 
       {/* Services Grid */}
@@ -62,123 +61,91 @@ export default function Services() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -6 }}
-                className="bg-white rounded-3xl p-7 border border-stone-100 shadow-sm hover:shadow-lg transition-all"
+                transition={{ delay: i * 0.08 }}
+                className="p-8 rounded-3xl bg-white border border-stone-200/80 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
-                <div className="text-amber-600 text-2xl mb-4">
-                  <FontAwesomeIcon icon={service.icon} />
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-6">
+                    <FontAwesomeIcon icon={service.icon} />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-stone-900 mb-2">{service.title}</h3>
+                  <p className="text-stone-600 text-sm leading-relaxed">{service.text}</p>
                 </div>
-                <h3 className="font-display text-lg font-bold text-stone-900 mb-2">{service.title}</h3>
-                <p className="text-xs md:text-sm text-stone-600 leading-relaxed">{service.text}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process */}
+      {/* How it works */}
       <section className="py-20 bg-white border-t border-stone-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-14 max-w-2xl mx-auto"
+            className="text-center mb-16 max-w-2xl mx-auto"
           >
-            <span className="text-amber-600 font-medium text-sm">How it works</span>
+            <span className="text-amber-600 font-medium text-sm">How we work</span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-stone-900 mt-1">
-              Simple 4-step rental process
+              4 simple steps from quote to takedown
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((item, i) => (
+            {process.map((p, i) => (
               <motion.div
-                key={item.step}
+                key={p.step}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.12 }}
-                className="relative bg-stone-50 rounded-3xl p-6 border border-stone-100"
+                transition={{ delay: i * 0.1 }}
+                className="relative p-6 rounded-2xl bg-stone-50 border border-stone-100"
               >
-                <span className="font-display text-4xl font-black text-amber-500/30">{item.step}</span>
-                <h3 className="font-display text-base font-bold text-stone-900 mt-2 mb-1.5">{item.title}</h3>
-                <p className="text-xs md:text-sm text-stone-600 leading-relaxed">{item.text}</p>
+                <span className="font-display text-4xl font-bold text-amber-200 block mb-3">{p.step}</span>
+                <h3 className="font-display text-lg font-bold text-stone-900 mb-2">{p.title}</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">{p.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-20 bg-stone-50 border-t border-stone-100">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10">
+      {/* Custom manufacturing callout */}
+      <section className="py-20 bg-stone-900 text-white">
+        <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
           >
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-stone-900">Why choose Julia Tents</h2>
-
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              '8+ years of dedicated tent fabrication and rental service in Uganda',
-              'Custom-built tents tailored to your specific event venue dimensions',
-              'Free delivery and professional pitch in Kampala and surrounding areas',
-              'Commercial-grade PVC and ripstop canvas fabrics tested for durability',
-              'Precision branding and logo printing on canopy gazebos',
-              'Responsive WhatsApp assistance from booking through to final takedown',
-            ].map((point, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="flex items-center gap-3 bg-white rounded-2xl p-4 border border-stone-100 shadow-xs"
+            <span className="text-amber-400 font-medium text-sm">Made in Uganda</span>
+            <h2 className="font-display text-3xl md:text-5xl font-bold mt-2 mb-6">
+              Need custom tent sizes or permanent shade structures?
+            </h2>
+            <p className="text-stone-300 text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+              We fabricate church pavilions, disaster relief shelters, lodge safari canvas, and warehouse tents tailored to your specifications at our Kampala factory.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <a
+                href={quoteLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-8 py-4 rounded-full inline-flex items-center gap-2 transition-all hover:scale-105"
               >
-                <FontAwesomeIcon icon={faCircleCheck} className="text-amber-500 flex-shrink-0" />
-                <span className="text-xs md:text-sm text-stone-700">{point}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-amber-600 to-amber-700">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="font-display text-3xl md:text-5xl font-bold text-white"
-          >
-            Ready to request a custom quote?
-          </motion.h2>
-          <p className="text-amber-50 text-base md:text-lg mt-4">
-            Tell us about your event dates and requirements — we will prepare an instant recommendation and quote on WhatsApp.
-          </p>
-          <a href={quoteLink} target="_blank" rel="noopener noreferrer">
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="mt-8 bg-white text-amber-800 font-bold px-8 py-3.5 rounded-full inline-flex items-center gap-2 hover:bg-stone-100 transition-colors shadow-lg"
-            >
-              <FontAwesomeIcon icon={faWhatsapp} className="text-[#25D366] text-lg" /> Request quote on WhatsApp
-            </motion.button>
-          </a>
-          <div className="mt-4">
-            <Link to="/products" className="text-amber-100 hover:text-white font-medium transition-colors text-sm">
-              Or browse our tent inventory &rarr;
-            </Link>
-          </div>
+                <FontAwesomeIcon icon={faWhatsapp} className="text-lg" />
+                Discuss custom manufacturing
+              </a>
+              <Link
+                to="/products"
+                className="bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-4 rounded-full inline-flex items-center gap-2 transition-all border border-white/20"
+              >
+                View tent stock <FontAwesomeIcon icon={faArrowRight} />
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
     </PageTransition>
   );
 }
-
